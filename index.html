@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rich Deal Barbershop</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="./styles/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <!-- Логотип -->
+            <div class="logo">
+                <img src="./images/logo.svg" alt="Logo" width="160" height="160">
+            </div>
+            <!-- Навигация -->
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#services">Услуги и цены</a></li>
+                    <li><a href="#gallery">Галерея работ</a></li>
+                    <li><a href="#booking">Контакты</a></li>
+                </ul>
+            </nav>
+            <!-- Номер телефона -->
+            <div class="phone">
+                <a href="tel:+79991234567">+7-928-650-11-21</a>
+            </div>
+        </div>
+        <!-- Бургер-меню (вынесен за пределы контейнера) -->
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <!-- Логотип в мобильном меню -->
+            <div class="mobile-logo">
+                <img src="./images/logo.svg" alt="Logo" width="120" height="120">
+            </div>
+            <!-- Навигация -->
+            <nav class="mobile-nav">
+                <ul class="mobile-nav-list">
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#services">Услуги и цены</a></li>
+                    <li><a href="#gallery">Галерея работ</a></li>
+                    <li><a href="#booking">Контакты</a></li>
+                </ul>
+            </nav>
+            <!-- Иконки соцсетей -->
+            <div class="mobile-social-links">
+                <a href="https://wa.me/+79286501121" target="_blank" class="social-icon">
+                    <img src="./icons/whatsapp.png" alt="WhatsApp">
+                </a>
+                <a href="https://t.me/razm1k_1" target="_blank" class="social-icon">
+                    <img src="./icons/telegram.png" alt="Telegram">
+                </a>
+                <a href="https://vk.com/26bar_ber26" target="_blank" class="social-icon">
+                    <img src="./icons/vkontakte.png" alt="ВКонтакте">
+                </a>
+                <a href="https://instagram.com/1bar_ber1" target="_blank" class="social-icon">
+                    <img src="./icons/instagram.png" alt="Instagram">
+                </a>
+            </div>
+            <!-- Номер телефона -->
+            <div class="mobile-phone">
+                <a href="tel:+79991234567">+7-999-123-45-67</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Первая секция (под шапкой) -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-top-text">
+                    «Каждая минута — вклад в ваш безупречный стиль.»
+                </div>
+                <h1>Добро пожаловать <br> в rich deal</h1>
+                <p>ЗАПИШИСЬ И ПОЛУЧИ СКИДКУ 20% <br> НА ПЕРВОЕ ПОСЕЩЕНИЕ</p>
+                <a href="#booking" class="btn">Записаться</a>
+            </div>
+        </div>
+
+        <a href="#booking" class="floating-button">
+            ОНЛАЙН ЗАПИСЬ
+        </a>
+    </section>
+
+    <!-- Секция о нас -->
+    <section class="about" id="about">
+        <div class="container">
+            <!-- Левая часть -->
+            <div class="about-text">
+                <h2>О НАШЕМ БАРБЕРШОПЕ</h2>
+                <p>
+                    Наш барбершоп — это место, где стиль встречается с мастерством.
+                    Мы работаем с 2020 года, создавая уникальные образы для наших клиентов.
+                    Наша миссия — сделать каждого мужчину уверенным в себе, предлагая
+                    качественные стрижки, бритье и уход за бородой. Мы используем только
+                    профессиональные инструменты и средства, чтобы вы могли наслаждаться
+                    комфортом и результатом.
+                </p>
+                <a href="#booking" class="btn">Записаться</a>
+            </div>
+
+            <!-- Правая часть -->
+            <div class="about-images">
+                <!-- image-placeholder -->
+                <div class="about-image"></div>
+                <div class="about-image"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Услуги и цены" -->
+    <section class="services" id="services">
+        <!-- <div class="container"> -->
+        <!-- Заголовок -->
+        <h2>Услуги и цены</h2>
+
+        <!-- Блок с услугами и ценами -->
+        <div class="services-grid">
+            <!-- Левая колонка -->
+            <div class="service-column">
+                <div class="service-item">
+                    <span class="service-name">Стрижка Фейд</span>
+                    <span class="service-price">900₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Классическая стрижка</span>
+                    <span class="service-price">600₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Детская стрижка (0-12 лет)</span>
+                    <span class="service-price">500₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Стрижка насадками</span>
+                    <span class="service-price">500₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Окантовка</span>
+                    <span class="service-price">200₽</span>
+                </div>
+            </div>
+
+            <!-- Правая колонка -->
+            <div class="service-column">
+                <div class="service-item">
+                    <span class="service-name">Моделирование бороды</span>
+                    <span class="service-price">600₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Стрижка бороды</span>
+                    <span class="service-price">400₽</span>
+                </div>
+                <div class="service-item">
+                    <span class="service-name">Окантовка бороды</span>
+                    <span class="service-price">200₽</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка "Записаться" -->
+        <div class="services-button">
+            <a href="#booking" class="btn">Записаться</a>
+        </div>
+        <!-- </div> -->
+    </section>
+
+    <!-- галерея -->
+    <section class="gallery" id="gallery">
+        <h2>Галерея работ</h2>
+
+        <div class="gallery-wrapper">
+            <!-- Иконки соцсетей слева -->
+            <div class="social-links left">
+                <a href="https://wa.me/+79286501121" target="_blank" class="social-icon">
+                    <img src="./icons/whatsapp.png" alt="WhatsApp">
+                </a>
+                <a href="https://t.me/razm1k_1" target="_blank" class="social-icon">
+                    <img src="./icons/telegram.png" alt="Telegram">
+                </a>
+            </div>
+
+            <!-- Слайдер -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="./images/1gallery.jpg" alt="Фото 1">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/2gallery.jpg" alt="Фото 2">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/3gallery.jpg" alt="Фото 3">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/4gallery.jpg" alt="Фото 4">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/5gallery.jpg" alt="Фото 5">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/6gallery.jpg" alt="Фото 6">
+                    </div>
+                    <!-- Добавьте остальные слайды -->
+                </div>
+                <!-- Кнопки перелистывания -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+            <!-- Иконки соцсетей справа -->
+            <div class="social-links right">
+                <a href="https://vk.com/26bar_ber26" target="_blank" class="social-icon">
+                    <img src="./icons/vkontakte.png" alt="ВКонтакте">
+                </a>
+                <a href="https://instagram.com/1bar_ber1" target="_blank" class="social-icon">
+                    <img src="./icons/instagram.png" alt="Instagram">
+                </a>
+            </div>
+        </div>
+
+        <!-- Кнопка "Записаться" -->
+        <div class="gallery-button">
+            <a href="#booking" class="btn">Записаться</a>
+        </div>
+    </section>
+
+    <!-- Секция "Контакты" -->
+    <section class="contacts" id="booking">
+        <div class="container">
+            <!-- Левая часть: онлайн-запись -->
+            <div class="online-booking">
+                <h2>Онлайн-запись</h2>
+                <p>Записаться можно через соцсети:</p>
+                <div class="social-links">
+                    <a href="https://wa.me/+79286501121" target="_blank" class="social-icon">
+                        <img src="./icons/whatsapp.png" alt="WhatsApp">
+                    </a>
+                    <a href="https://t.me/razm1k_1" target="_blank" class="social-icon">
+                        <img src="./icons/telegram.png" alt="Telegram">
+                    </a>
+                    <a href="https://vk.com/26bar_ber26" target="_blank" class="social-icon">
+                        <img src="./icons/vkontakte.png" alt="ВКонтакте">
+                    </a>
+                    <a href="https://instagram.com/1bar_ber1" target="_blank" class="social-icon">
+                        <img src="./icons/instagram.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Правая часть: контакты -->
+            <div class="contact-details">
+                <h2>Контакты</h2>
+                <p>+7 928 650 11 21</p>
+                <p>Город Михайловск, Улица Ленина 161/3</p>
+                <p>График работы: Вт-Вс 9:00 - 19:00</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-copyright">
+            <p>© 2025 Барбершоп "Rich Deal". Все права защищены.</p>
+            <a href="https://t.me/max_04r" target="_blank" class="developer-link">Разработчик сайта</a>
+        </div>
+    </footer>
+
+    <!-- Подключение Swiper JS -->
+    <script src="./scripts/swiper-bundle.min.js"></script>
+
+    <!-- Скрипт для слайдера -->
+    <script src="./scripts/swiper_script.js"></script>
+
+    <!-- Скрипт для бургера -->
+    <script src="./scripts/burger-script.js"></script>
+
+</body>
+
+</html>
