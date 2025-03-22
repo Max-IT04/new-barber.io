@@ -1,0 +1,944 @@
+/**
+  Нормализация блочной модели
+ */
+ *,
+ ::before,
+ ::after {
+   box-sizing: border-box;
+ }
+ 
+ /**
+   Убираем внутренние отступы слева тегам списков,
+   у которых есть атрибут class
+  */
+ :where(ul, ol):where([class]) {
+   padding-left: 0;
+ }
+ 
+ /**
+   Убираем внешние отступы body и двум другим тегам,
+   у которых есть атрибут class
+  */
+ body,
+ :where(blockquote, figure):where([class]) {
+   margin: 0;
+ }
+ 
+ /**
+   Убираем внешние отступы вертикали нужным тегам,
+   у которых есть атрибут class
+  */
+ :where(
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6,
+   p,
+   ul,
+   ol,
+   dl
+ ):where([class]) {
+   margin-block: 0;
+ }
+ 
+ :where(dd[class]) {
+   margin-left: 0;
+ }
+ 
+ :where(fieldset[class]) {
+   margin-left: 0;
+   padding: 0;
+   border: none;
+ }
+ 
+ /**
+   Убираем стандартный маркер маркированному списку,
+   у которого есть атрибут class
+  */
+ :where(ul[class]) {
+   list-style: none;
+ }
+ 
+ :where(address[class]) {
+   font-style: normal;
+ }
+ 
+ /**
+   Обнуляем вертикальные внешние отступы параграфа,
+   объявляем локальную переменную для внешнего отступа вниз,
+   чтобы избежать взаимодействие с более сложным селектором
+  */
+ p {
+   --paragraphMarginBottom: 24px;
+ 
+   margin-block: 0;
+ }
+ 
+ /**
+   Внешний отступ вниз для параграфа без атрибута class,
+   который расположен не последним среди своих соседних элементов
+  */
+ p:where(:not([class]):not(:last-child)) {
+   margin-bottom: var(--paragraphMarginBottom);
+ }
+ 
+ 
+ /**
+   Упрощаем работу с изображениями
+  */
+ img {
+   /* display: block; */
+   max-width: 100%;
+ }
+ 
+ /**
+   Наследуем свойства шрифт для полей ввода
+  */
+ input,
+ textarea,
+ select,
+ button {
+   font: inherit;
+ }
+ 
+ html {
+   /**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+   height: 100%;
+ }
+ 
+ /**
+   Плавный скролл
+  */
+ html,
+ :has(:target) {
+   scroll-behavior: smooth;
+ }
+ 
+ body {
+   /**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+   min-height: 100%;
+   /**
+     Унифицированный интерлиньяж
+    */
+   line-height: 1.5;
+ }
+ 
+ /**
+   Приводим к единому цвету svg-элементы
+  */
+ svg *[fill] { fill: currentColor }
+ svg *[stroke] { stroke: currentColor }
+ 
+ /**
+   Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+  */
+ svg * {
+   transition-property: fill, stroke;
+ }
+ 
+ /**
+   Удаляем все анимации и переходы для людей,
+   которые предпочитают их не использовать
+  */
+ @media (prefers-reduced-motion: reduce) {
+   *,
+   ::before,
+   ::after {
+     animation-duration: 0.01ms !important;
+     animation-iteration-count: 1 !important;
+     transition-duration: 0.01ms !important;
+     scroll-behavior: auto !important;
+   }
+ }
+
+/* Основная разработка ==================================================== */
+
+/* Общие стили */
+body {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Контейнер */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between; /* Распределяем пространство между элементами */
+  align-items: center; /* Выравниваем элементы по центру вертикально */
+  height: 100%; /* Занимает всю высоту шапки */
+}
+
+/* Шапка сайта */
+.header {
+  background-color: #333;
+  color: #fff;
+  height: 80px; /* Фиксированная высота шапки */
+  display: flex;
+  align-items: center; /* Выравниваем элементы по центру вертикально */
+  justify-content: space-between; /* Распределяем пространство между элементами */
+  padding: 0 20px; /* Добавляем отступы по бокам */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Логотип */
+.logo img {
+  width: 160px;
+  height: 160px;
+  filter: invert(1);
+}
+
+/* Навигация */
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-list a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.nav-list a:hover {
+  color: #ff6c00;
+}
+
+/* Телефон */
+.phone a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Бургер-меню */
+.burger {
+  display: none; /* По умолчанию скрываем бургер */
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1002; /* Убедимся, что бургер поверх других элементов */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 24px;
+}
+
+.burger span {
+  width: 100%;
+  height: 4px;
+  background-color: #ff6c00; /* Оранжевый цвет для полосок бургера */
+  margin: 3px 0;
+  transition: 0.3s;
+  position: relative;
+}
+
+/* Анимация бургера в крестик */
+.burger.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 8px;
+}
+
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: -8px;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Скрываем меню за пределами экрана */
+  width: 80%;
+  height: 100%;
+  background-color: #333;
+  z-index: 1000;
+  transition: left 0.3s ease;
+
+  overflow-y: auto; /* Добавляем скролл, если контент не помещается */
+}
+
+.mobile-menu.active {
+  left: 0; /* Показываем меню */
+}
+
+.mobile-menu-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mobile-logo img {
+  width: 120px;
+  height: 120px;
+  filter: invert(1);
+  margin-bottom: 10px;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.mobile-nav-list li {
+  margin: 15px 0;
+}
+
+.mobile-nav-list a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px; /* Увеличиваем размер пунктов меню */
+}
+
+.mobile-social-links {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px; /* Расстояние между иконками */
+}
+
+.mobile-social-links img {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile-phone {
+  margin-top: 20px;
+}
+
+.mobile-phone a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Блокировка скролла при открытом меню */
+.no-scroll {
+  overflow: hidden;
+}
+
+/* Адаптивность для шапки */
+@media (max-width: 768px) {
+  .header {
+    height: 60px; /* Уменьшаем высоту шапки на мобильных устройствах */
+    /* max-width: 100%; */
+  }
+
+  .container {
+    padding: 0 20px; /* Уменьшаем отступы контейнера */
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .nav {
+      display: none; /* Скрываем навигацию на мобильных устройствах */
+  }
+
+  .phone {
+      display: none; /* Скрываем телефон на мобильных устройствах */
+  }
+
+  .burger {
+      display: flex; /* Показываем бургер на мобильных устройствах */
+      margin-left: auto; /* Прижимаем бургер к правому краю */
+  }
+}
+
+/* первая секция (секция под шапкой) ====================== =======================================================*/
+
+.hero {
+  padding-top: 80px; /* Отступ сверху для фиксированной шапки */
+  height: 100vh; /* высота секции */
+    /* Фоновое изображение */
+  background-image: url('../images/bg-1section.jpg'); 
+  /* background-image: url('../images/black_bg.jpg'); */
+    /* Фоновое изображение */
+  background-size: cover; /* Растягиваем изображение на всю ширину */
+  background-position: center; /* Центрируем изображение */
+  display: flex;
+  align-items: center; /* Выравниваем контент по вертикали */
+  justify-content: flex-start; /* Выравниваем контент по левому краю */
+  color: #fff; /* Белый текст */
+  position: relative; /* Для затемнения фона */
+} 
+
+/* затемнение фона */ 
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный цвет */
+  z-index: 1; /* Затемнение поверх фона */
+}
+
+/* Контент поверх затемнения */
+.hero-content {
+  position: relative;
+  z-index: 2; /* Контент поверх затемнения */
+  /* max-width: 500px;  */
+  max-width: 800px; /* Ограничиваем ширину текста */
+  text-align: left; /* Выравниваем текст по левому краю */
+  margin-left: 20px;  /* Добавляем отступ слева */
+}
+
+.hero-top-text {
+  background-color: #ff8100;
+  color: #333;
+  padding: 10px 20px; 
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px; 
+  text-align: center;
+  /* margin-bottom: 20px; */
+  max-width: 600px;
+  width: 100%;
+
+}
+
+.hero h1 {
+  font-size: 48px; /* размер заголовка */
+  margin-bottom: 20px;
+  color: #fff;
+  font-weight: bold; /* Делаем текст жирным */
+  text-transform: uppercase; /* Делаем текст заглавными буквами */
+}
+
+.hero p {
+  font-size: 28px;  /* размер текста */ 
+  margin-bottom: 40px; /* отступ снизу */ 
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Кнопка записаться */ 
+.btn {
+  display: inline-block;
+  padding: 16px 32px; /* размер кнопки */ 
+  background-color: #ff8100; 
+  color: #333;
+  text-decoration: none; 
+  font-size: 20px;  /* размер текста кнопки*/
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background-color: #ff6c00; /* изменение цвета при наведении */ 
+}
+
+/* КНОПКА ОНЛАЙН ЗАПИСЬ */
+.floating-button {
+  position: fixed;
+  bottom: 60px;
+  right: 200px;
+  width: 120px; /* Ширина кнопки */
+  height: 120px; /* Высота кнопки */
+  background-color: #ff8100; /* Ярко-оранжевый цвет */
+  color: #333; /* Белый текст */
+  font-size: 16px; /* Размер текста */
+  font-weight: bold;
+  text-transform: uppercase; /* Текст заглавными буквами */
+  border-radius: 50%; /* Делаем кнопку круглой */
+  display: flex;
+  align-items: center; /* Выравниваем текст по вертикали */
+  justify-content: center; /* Выравниваем текст по горизонтали */
+  text-align: center; /* Выравниваем текст внутри */
+  box-shadow: 0 0 20px rgba(255, 129, 0, 0.5); /* Тень для объёма */
+  animation: pulse 2s infinite; /* Пульсация */
+  cursor: pointer; /* Курсор в виде указателя */
+  z-index: 1000; /* Чтобы кнопка была поверх других элементов */
+  text-decoration: none; /* Убираем подчёркивание */
+  padding: 10px; /* Отступы внутри кнопки */
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); 
+  }
+  100% {
+    transform: scale(1); 
+  }
+}
+
+/* адаптив для первой секции*/ 
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Меняем направление на вертикальное */
+    text-align: center; /* Выравниваем текст по центру */
+  }
+
+  .hero {
+    padding-top: 60px;
+    height: 600px; /* Уменьшаем высоту на мобильных устройствах */
+  }
+
+  .hero-top-text {
+    font-size: 16px; 
+    padding: 8px 16px; 
+    border-radius: 8px;
+  }
+
+  .hero-content {
+    max-width: 100%; /* Убираем ограничение ширины текста */
+    margin-left: 10px; /* Уменьшаем отступ слева на мобильных устройствах */
+  }
+
+  .hero-content h1 {
+    font-size: 36px; /* Уменьшаем размер заголовка */
+  }
+
+  .hero-content p {
+    font-size: 20px; /* Уменьшаем размер текста */
+  }
+
+  .btn {
+    font-size: 16px; /* Уменьшаем размер кнопки */
+    padding: 12px 24px; /* отступы кнопки */ 
+  }
+
+  /* онлайн запись кнопка */
+  .floating-button {
+    display: none;
+  }
+}
+
+/* вторая секция - о нас */
+.about {
+  padding: 80px 0; /* Отступы сверху и снизу */
+  background-color: #f9f9f9; /* Светлый фон */
+}
+
+.about .container {
+  display: flex;
+  gap: 40px; /* Расстояние между текстом и фотографиями */
+  align-items: center; /* Выравниваем элементы по центру вертикально */
+}
+
+/* Левая часть: текст и кнопка */
+.about-text {
+  flex: 1; /* Занимает 50% ширины */
+  max-width: 50%; /* Ограничиваем ширину текстового блока */
+}
+
+.about-text h2 {
+  font-size: 36px; /* Размер заголовка */
+  color: #333; /* Цвет текста */
+  margin-bottom: 20px; /* Отступ снизу */
+  text-transform: uppercase; /* Заглавные буквы */
+}
+
+.about-text p {
+  font-size: 18px; /* Размер текста */
+  color: #666; /* Цвет текста */
+  line-height: 1.6; /* Межстрочный интервал */
+  margin-bottom: 30px; /* Отступ снизу */
+}
+
+/* Правая часть: фотографии */
+.about-images {
+  flex: 1; /* Занимает 50% ширины */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Две колонки */
+  gap: 20px; /* Расстояние между фотографиями */
+}
+
+.about-image {
+  background-color: #ddd; /* Серый фон для плейсхолдера */
+  height: 350px; /* Высота плейсхолдера */
+  border-radius: 10px; /* Скругление углов */
+}
+
+/* Адаптив О НАС */
+@media (max-width: 768px) {
+  .about .container {
+    flex-direction: column; /* Меняем направление на вертикальное */
+  }
+
+  .about-text {
+    max-width: 100%; /* Убираем ограничение ширины текста */
+  }
+
+  .about-text h2 {
+    font-size: 28px; /* Уменьшаем размер заголовка */
+  }
+
+  .about-text p {
+    font-size: 16px; /* Уменьшаем размер текста */
+  }
+
+  .about-images {
+    width: 100%; /* Занимает всю ширину на мобильных устройствах */
+  }
+
+  .about-image {
+    height: 200px; /* Уменьшаем высоту плейсхолдера */
+  }
+}
+
+/* Секция "Услуги и цены" */
+.services {
+  padding: 30px 0; /* Отступы сверху и снизу */
+  background-color: #333; /* Фон как у шапки */
+  color: #fff; /* Белый текст */
+  text-align: center; /* Центрируем текст */
+}
+
+.services h2 {
+  font-size: 36px; /* Размер заголовка */
+  text-align: center; /* Выравнивание по центру */
+  margin-bottom: 40px; /* Отступ снизу */
+  text-transform: uppercase; /* Заглавные буквы */
+}
+
+/* Сетка для услуг */
+.services-grid {
+  display: flex;
+  justify-content: center; /* Центрируем блоки услуг */
+  gap: 40px; /* Расстояние между колонками */
+  max-width: 800px; /* Ограничиваем ширину сетки */
+  margin: 0 auto; /* Центрируем сетку */
+  margin-bottom: 40px; /* Отступ снизу */
+}
+
+/* Колонка с услугами */
+.service-column {
+  background-color: #444; /* Фон чуть темнее, чем у шапки */
+  padding: 20px; /* Отступы внутри колонки */
+  border-radius: 10px; /* Скругление углов */
+  width: 45%; /* ширина колонки */ 
+}
+
+/* Элемент услуги */
+.service-item {
+  display: flex;
+  justify-content: space-between; /* Распределяем текст и цену */
+  padding: 10px 0; /* Отступы сверху и снизу */
+  border-bottom: 1px solid #666; /* Полоса между услугами */
+}
+
+.service-item:last-child {
+  border-bottom: none; /* Убираем полосу у последнего элемента */
+}
+
+.service-name {
+  font-size: 18px; /* Размер текста услуги */
+}
+
+.service-price {
+  font-size: 18px; /* Размер текста цены */
+  font-weight: bold; /* Жирный текст */
+}
+
+/* Кнопка "Записаться" */
+.services-button {
+  text-align: center; /* Выравниваем кнопку по центру */
+}
+
+/* Адаптив для секции "Услуги и цены" */
+@media (max-width: 768px) {
+  .services h2 {
+      font-size: 28px; /* Уменьшаем размер заголовка */
+  }
+
+  .services-grid {
+      flex-direction: column; /* Одна колонка на мобильных устройствах */
+      gap: 20px; /* Уменьшаем расстояние между колонками */
+  }
+
+  .service-column {
+    width: 100%; /* Полная ширина на мобильных устройствах */
+  }
+
+  .service-item {
+      font-size: 16px; /* Уменьшаем размер текста */
+  }
+}
+
+/* Секция "Галерея работ" */
+.gallery {
+  /* padding: 10px 0; */
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.gallery h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Обёртка для слайдера и иконок */
+.gallery-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Расстояние между слайдером и иконками */
+  margin: 0 auto; /* Центрируем обёртку */
+  max-width: 1200px; /* Ограничиваем ширину обёртки */
+  padding: 0 20px; /* Добавляем отступы по бокам */
+}
+
+/* Иконки соцсетей */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Расстояние между иконками */
+}
+
+.social-icon img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-icon img:hover {
+  transform: scale(1.1); /* Увеличение иконок при наведении */
+}
+
+/* Слайдер */
+.swiper-container {
+  width: 100%; /* Занимает всю доступную ширину */
+  max-width: 350px; /* Ограничиваем максимальную ширину */
+  margin: 0 auto; /* Центрируем слайдер */
+}
+
+/* Слайды */
+.swiper-slide {
+  display: flex;
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  align-items: center; /* Центрируем содержимое по вертикали */
+  /* Ширина слайда */
+  width: 250px;
+  height: 450px; /* Высота слайда */
+  border-radius: 10px; /* Скругление углов */
+  overflow: hidden; /* Обрезаем изображение, чтобы оно не выходило за пределы слайда */
+  margin: 0 auto; /* Центрируем слайд внутри контейнера */
+}
+
+.swiper-slide img {
+  width: 100%; /* Заполняем слайд по ширине */
+  height: 100%; /* Заполняем слайд по высоте */
+  object-fit: cover; /* Сохраняем пропорции и обрезаем изображение */
+  border-radius: 10px; /* Скругление углов */
+  display: block; /* Убираем лишние отступы */
+}
+
+/* Кнопки перелистывания */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ff8100; /* Цвет кнопок */
+}
+
+/* Кнопка "Записаться" */
+.gallery-button {
+  text-align: center;
+  margin-top: 40px; /* Отступ сверху */
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+  .gallery h2 {
+    font-size: 28px;
+  }
+
+  .gallery-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .swiper-container {
+    width: 90%; /* Увеличиваем ширину на мобильных */
+    max-width: 100%; /* Убираем ограничение по ширине */
+  }
+
+  .swiper-slide {
+    width: 200px; /* Уменьшаем ширину слайда на мобильных */
+    height: 400px; /* Уменьшаем высоту слайда на мобильных */
+  }
+
+  .social-links {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .social-icon img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* контакты и карта */
+/* Секция "Контакты" */
+.contacts {
+  margin-top: 10px;
+  padding: 0px 0;
+  background-color: #333; /* Цвет фона как у шапки */
+  color: #fff; /* Белый текст */
+}
+
+.contacts .container {
+  display: flex;
+  gap: 10px; /* Расстояние между левой и правой частями */
+  max-width: 1200px; /* Ограничиваем ширину контейнера */
+  margin: 0 auto; /* Центрируем контейнер */
+  padding: 0 20px; /* Добавляем отступы по бокам */
+}
+
+/* Левая часть: онлайн-запись */
+.online-booking {
+  flex: 1; /* Занимает 50% ширины */
+  padding: 40px;
+  margin-bottom: 190px;
+}
+
+.online-booking h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.online-booking p {
+  font-size: 16px;
+  margin-bottom: 20px;
+
+}
+
+.social-links {
+  display: flex;
+  gap: 20px; /* Расстояние между иконками */
+  flex-direction: row; /* Иконки в строку (горизонтально) */
+}
+
+.social-icon img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-icon img:hover {
+  transform: scale(1.1); /* Увеличение иконок при наведении */
+}
+
+/* Правая часть: контакты */
+.contact-details {
+  flex: 1; /* Занимает 50% ширины */
+  padding: 40px;
+  margin-bottom: 180px;
+}
+
+.contact-details h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.contact-details p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+  .contacts .container {
+    flex-direction: column; /* Меняем направление на вертикальное */
+    gap: 20px; /* Уменьшаем расстояние между блоками */
+  }
+
+  .online-booking,
+  .contact-details {
+    padding: 20px; /* Уменьшаем отступы на мобильных устройствах */
+  }
+
+  .online-booking {
+    margin-bottom: 0px;
+  }
+
+  .contact-details {
+    margin-bottom: 100px;
+  }
+
+  .social-links {
+    justify-content: center; /* Центрируем иконки на мобильных устройствах */
+  }
+}
+
+/* Футер */
+.footer {
+  background-color: #f9f9f9; /* Светлый фон */
+  padding: 20px 0;
+}
+
+.footer-copyright {
+  display: flex;
+  justify-content: space-between; /* Распределяем текст и ссылку */
+  align-items: center; /* Выравниваем по центру вертикально */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-copyright p {
+  font-size: 14px;
+  color: #333; /* Тёмный текст */
+  margin: 0; /* Убираем отступы */
+}
+
+.developer-link {
+  font-size: 14px;
+  color: #333; /* Тёмный текст */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.developer-link:hover {
+  color: #ff6c00; /* Оранжевый цвет при наведении */
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+  .footer-copyright {
+    flex-direction: column; /* Меняем направление на вертикальное */
+    text-align: center; /* Центрируем текст */
+    gap: 10px; /* Расстояние между элементами */
+  }
+}
