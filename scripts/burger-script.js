@@ -18,3 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   });
+
+// убираем гориз скролл
+document.documentElement.classList.add('no-scroll'); 
