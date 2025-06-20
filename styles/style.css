@@ -186,7 +186,7 @@ body {
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  justify-content: space-between; /* Распределяем пространство между элементами */
+  justify-content: space-between; 
   align-items: center; /* Выравниваем элементы по центру вертикально */
   height: 100%; /* Занимает всю высоту шапки */
 }
