@@ -195,7 +195,7 @@ body {
 .header {
   background-color: #333;
   color: #fff;
-  height: 80px; /* Фиксированная высота шапки */
+  height: 80px; 
   display: flex;
   align-items: center; /* Выравниваем элементы по центру вертикально */
   justify-content: space-between; /* Распределяем пространство между элементами */
